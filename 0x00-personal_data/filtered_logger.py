@@ -58,7 +58,13 @@ class RedactingFormatter(logging.Formatter):
 
 
 def get_logger() -> logging.Logger:
-    """  """
+    """
+     Creates a logger named "user_data" that logs up to INFO level and uses
+    RedactingFormatter to obfuscate PII fields.
+
+    Returns:
+        logging.Logger: Configured logger.
+    """
     logger = logging.getLogger("user_data")
     logger.setLevel(logging.INFO)
     logger.propagate = False
