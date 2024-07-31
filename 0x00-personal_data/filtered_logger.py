@@ -4,7 +4,9 @@ Module for filtering and obfuscating log messages.
 """
 import re
 import logging
-from typing import List
+from typing import List, Tuple
+
+PII_FIELDS: Tuple[str, ...] = ("name", "email", "phone", "ssn", "password")
 
 
 def filter_datum(
@@ -53,3 +55,18 @@ class RedactingFormatter(logging.Formatter):
                             self.REDACTION,
                             org_msg, self.SEPARATOR
                             )
+
+
+def get_logger() -> logging.Logger:
+    """  """
+    logger = logging.getLogger("user_data")
+    logger.setLevel(logging.INFO)
+    logger.propagate = False
+
+    stream_handler = logging.StreamHandler()
+    formatter = RedactingFormatter(fields=PII_FIELDS)
+    stream_handler.setFormatter(formatter)
+
+    logger.addHandler(stream_handler)
+
+    return logger
