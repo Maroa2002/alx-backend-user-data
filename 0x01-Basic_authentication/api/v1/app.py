@@ -19,12 +19,14 @@ if auth_type == 'auth':
     auth = Auth()
 
 
-excluded_paths = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']
+excluded_paths = ['/api/v1/status/',
+                  '/api/v1/unauthorized/',
+                  '/api/v1/forbidden/']
 
 
 @app.before_request
 def before_request():
-    """ Handler for filtering each request 
+    """ Handler for filtering each request
     """
     if auth is None:
         return
