@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""""Flask app"""
+"""Flask app"""
 from flask import Flask, jsonify, request
 from auth import Auth
 
@@ -14,7 +14,7 @@ def index():
     return jsonify({"message": "Bienvenue"})
 
 
-@app.route("/users", methods=["POST"])
+@app.route("/users", methods=['POST'])
 def users():
     """/users route"""
     email = request.form.get("email")
