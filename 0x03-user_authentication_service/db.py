@@ -6,6 +6,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
+from typing import Any, Dict
 
 from user import Base, User
 
@@ -35,7 +36,7 @@ class DB:
         self._session.commit()
         return new_user
 
-    def find_user_by(self, **kwargs) -> User:
+    def find_user_by(self, **kwargs: Dict[str, Any]) -> User:
         """Finds a user from the database based on arbitrary kwargs"""
         try:
             user = self._session.query(User).filter_by(**kwargs).one()
@@ -49,7 +50,7 @@ class DB:
                 f"Invalid query arguments: {kwargs}"
                 ) from e
 
-    def update_user(self, user_id: int, **kwargs) -> None:
+    def update_user(self, user_id: int, **kwargs: Dict[str, Any]) -> None:
         """Updates a user data"""
         user = self.find_user_by(id=user_id)
         for k, v in kwargs.items():
