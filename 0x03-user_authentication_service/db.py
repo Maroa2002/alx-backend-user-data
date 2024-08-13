@@ -48,3 +48,15 @@ class DB:
             raise InvalidRequestError(
                 f"Invalid query arguments: {kwargs}"
                 ) from e
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """Updates a user data"""
+        user = self.find_user_by(id=user_id)
+        for k, v in kwargs.items():
+            if not hasattr(user, k):
+                raise ValueError(
+                    f"Attribute '{k}' does not exist on the User model."
+                    )
+            setattr(user, k, v)
+
+        self._session.commit()
